@@ -1,4 +1,4 @@
-﻿/*! y-tooltip - v1.1 - 30/10/2025
+﻿/*! y-tooltip - v1.2 - 16/11/2025
 * By Yuval Ashkenazi
 * https://github.com/yuvalAshkenaz/y-tooltip
 *
@@ -6,6 +6,7 @@
 * data-tooltip
 * data-tooltip-top
 * data-tooltip-left
+* data-tooltip-right
 */
 [data-tooltip]::after {
 	box-sizing: border-box;
@@ -28,6 +29,10 @@
 	visibility: hidden;
 	-webkit-transition: all 0.1s ease;
 	transition: all 0.1s ease;
+}
+[data-tooltip][data-tooltip-right]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single)::before {
+	left: auto;
+	right: 15px;
 }
 [data-tooltip][data-tooltip-left]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single)::before {
 	left: 15px;
@@ -91,10 +96,20 @@
 	-webkit-transform: translate(-50%, 6px);
 	transform: translate(-50%, 6px);
 }
+[data-tooltip][data-tooltip-right]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single)::after {
+	right: 0;
+	left: auto;
+	-webkit-transform: translate(9px, -6px);
+	transform: translate(9px, -6px);
+}
 [data-tooltip][data-tooltip-left]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single)::after {
 	left: 0;
 	-webkit-transform: translate(-9px, -6px);
 	transform: translate(-9px, -6px);
+}
+[data-tooltip][data-tooltip-top][data-tooltip-right]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single)::after {
+	-webkit-transform: translate(9px, 6px);
+	transform: translate(9px, 6px);
 }
 [data-tooltip][data-tooltip-top][data-tooltip-left]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single)::after {
 	-webkit-transform: translate(-9px, 6px);
@@ -106,4 +121,11 @@
 [data-tooltip][data-tooltip-left]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single):hover::after {
 	-webkit-transform: translate(-9px, 0);
 	transform: translate(-9px, 0);
+}
+[data-tooltip][data-tooltip-top][data-tooltip-right]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single):focus::after,
+[data-tooltip][data-tooltip-top][data-tooltip-right]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single):hover::after,
+[data-tooltip][data-tooltip-right]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single):focus::after,
+[data-tooltip][data-tooltip-right]:not([data-tooltip=""]):not(.noUiSlider):not(.noUiSlider-single):hover::after {
+	-webkit-transform: translate(9px, 0);
+	transform: translate(9px, 0);
 }
