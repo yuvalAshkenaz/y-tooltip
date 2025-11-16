@@ -1,4 +1,4 @@
-<h1>y-tooltip 1.1</h1>
+<h1>y-tooltip 1.2</h1>
 
 &lt;button <b>data-tooltip="Tooltip bottom"</b>&gt;&lt;/button&gt;<br>
 ![Screenshot_1](https://github.com/user-attachments/assets/c14af080-57e6-4ed6-a353-76e858a6b1b5)
