@@ -1,0 +1,256 @@
+/*! y-tooltip - v1.4 - 12/11/2026
+* By Yuval Ashkenazi
+* https://github.com/yuvalAshkenaz/y-tooltip */
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single) {
+	position: relative;
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)::before {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin: 4px 0 0 0;
+	border-bottom: 6px solid var(--y-tooltip-bg, #404040);
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	pointer-events: none;
+	-webkit-transform: translate(-50%, 6px);
+	transform: translate(-50%, 6px);
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 0.1s ease;
+	transition: all 0.1s ease;
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)::after {
+	/* --y-tooltip-x is the horizontal offset of the tooltip: -50% = centered, 0px = starts at an edge */
+	--y-tooltip-x: -50%;
+	content: attr(data-tooltip);
+	box-sizing: border-box;
+	background: var(--y-tooltip-bg, #404040);
+	width: max-content;
+	max-width: var(--y-tooltip-max-width, 176px);
+	margin: 10px 0 0 0;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	padding: var(--y-tooltip-padding, 4px 12px);
+	z-index: var(--y-tooltip-z-index, 2);
+	border-radius: var(--y-tooltip-radius, 15px);
+	color: var(--y-tooltip-color, #fff);
+	text-align: center;
+	font-family: var(--y-tooltip-font-family, arial);
+	font-size: var(--y-tooltip-font-size, 16px);
+	font-weight: 500;
+	line-height: 1.2;
+	pointer-events: none;
+	-webkit-transform: translate(var(--y-tooltip-x), -6px);
+	transform: translate(var(--y-tooltip-x), -6px);
+	/* A hidden tooltip is collapsed to a point, so it never widens the page */
+	scale: 0;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 0.4s ease;
+	transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease, scale 0s linear 0.4s;
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-top]::before {
+	top: auto;
+	bottom: 100%;
+	margin: 0 0 -2px 0;
+	-webkit-transform: translate(-50%, -6px);
+	transform: translate(-50%, -6px);
+	border-bottom-color: transparent;
+	border-top: 6px solid var(--y-tooltip-bg, #404040);
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-top]::after {
+	top: auto;
+	bottom: 100%;
+	margin: 0 0 10px 0;
+	-webkit-transform: translate(var(--y-tooltip-x), 6px);
+	transform: translate(var(--y-tooltip-x), 6px);
+}
+/* Aligned to the right or left edge of the element */
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-right]::before {
+	left: auto;
+	right: 15px;
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-left]::before {
+	left: 15px;
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-right]::after {
+	--y-tooltip-x: 0px;
+	right: 0;
+	left: auto;
+	margin-right: -9px;
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-left]::after {
+	--y-tooltip-x: 0px;
+	left: 0;
+	margin-left: -9px;
+}
+/* Browsers with CSS anchor positioning: the tooltip is positioned against the screen, so it
+   knows where the edges are. It is centered on its element, and when it would leave the
+   screen it is aligned to the start or the end edge of the element instead. */
+@supports (position-area: bottom) {
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single) {
+		anchor-name: --y-tooltip;
+		anchor-scope: --y-tooltip;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)::after,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-top]::after,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-left]::after,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-right]::after {
+		--y-tooltip-x: 0px;
+		position: fixed;
+		position-anchor: --y-tooltip;
+		inset: auto;
+		margin-left: 0;
+		margin-right: 0;
+		position-area: bottom span-all;
+		justify-self: anchor-center;
+		position-try-fallbacks: --y-tooltip-bottom-start, --y-tooltip-bottom-end;
+	}
+	/* The arrow is anchored to the same box as the tooltip, so there is no gap between them */
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-top]::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-left]::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-right]::before {
+		position: fixed;
+		position-anchor: --y-tooltip;
+		inset: auto;
+		top: anchor(bottom);
+		left: anchor(center);
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-top]::before {
+		top: auto;
+		bottom: anchor(top);
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-left]::before {
+		left: calc(anchor(left) + 15px);
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-right]::before {
+		left: auto;
+		right: calc(anchor(right) + 15px);
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-top]::after {
+		position-area: top span-all;
+		position-try-fallbacks: --y-tooltip-top-start, --y-tooltip-top-end;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-left]::after {
+		position-area: bottom span-right;
+		justify-self: start;
+		margin-left: -9px;
+		position-try-fallbacks: --y-tooltip-bottom-end;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-right]::after {
+		position-area: bottom span-left;
+		justify-self: end;
+		margin-right: -9px;
+		position-try-fallbacks: --y-tooltip-bottom-start;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-top][data-tooltip-left]::after {
+		position-area: top span-right;
+		position-try-fallbacks: --y-tooltip-top-end;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)[data-tooltip-top][data-tooltip-right]::after {
+		position-area: top span-left;
+		position-try-fallbacks: --y-tooltip-top-start;
+	}
+	@position-try --y-tooltip-bottom-start {
+		position-area: bottom span-right;
+		justify-self: start;
+		margin-left: -9px;
+		margin-right: 0;
+	}
+	@position-try --y-tooltip-bottom-end {
+		position-area: bottom span-left;
+		justify-self: end;
+		margin-left: 0;
+		margin-right: -9px;
+	}
+	@position-try --y-tooltip-top-start {
+		position-area: top span-right;
+		justify-self: start;
+		margin-left: -9px;
+		margin-right: 0;
+	}
+	@position-try --y-tooltip-top-end {
+		position-area: top span-left;
+		justify-self: end;
+		margin-left: 0;
+		margin-right: -9px;
+	}
+}
+/* Visible state: keyboard focus, mouse hover, and touch (see below) */
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):focus-visible::before,
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):focus-visible::after {
+	scale: 1;
+	opacity: 1;
+	visibility: visible;
+	transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease, scale 0s;
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):focus-visible::before {
+	-webkit-transform: translate(-50%, 0);
+	transform: translate(-50%, 0);
+	-webkit-transition: all 0.4s ease 0.1s;
+	transition: all 0.4s ease 0.1s;
+}
+[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):focus-visible::after {
+	-webkit-transform: translate(var(--y-tooltip-x), 0);
+	transform: translate(var(--y-tooltip-x), 0);
+}
+@media (hover: hover) and (pointer: fine) {
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):hover::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):hover::after {
+		scale: 1;
+		opacity: 1;
+		visibility: visible;
+		transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease, scale 0s;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):hover::before {
+		-webkit-transform: translate(-50%, 0);
+		transform: translate(-50%, 0);
+		-webkit-transition: all 0.4s ease 0.1s;
+		transition: all 0.4s ease 0.1s;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):hover::after {
+		-webkit-transform: translate(var(--y-tooltip-x), 0);
+		transform: translate(var(--y-tooltip-x), 0);
+	}
+}
+/* Touch screens. Safari on iPhone and iPad does not focus a button or a link on tap,
+   so :focus alone never fires there. The tap sets :hover (which stays until the next tap
+   elsewhere) and :active (while pressed). Android and others also set :focus. */
+@media (hover: none) {
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):hover::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):hover::after,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):focus::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):focus::after,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):active::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):active::after {
+		scale: 1;
+		opacity: 1;
+		visibility: visible;
+		transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease, scale 0s;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):hover::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):focus::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):active::before {
+		-webkit-transform: translate(-50%, 0);
+		transform: translate(-50%, 0);
+		-webkit-transition: all 0.4s ease 0.1s;
+		transition: all 0.4s ease 0.1s;
+	}
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):hover::after,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):focus::after,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single):active::after {
+		-webkit-transform: translate(var(--y-tooltip-x), 0);
+		transform: translate(var(--y-tooltip-x), 0);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)::before,
+	[data-tooltip]:not([data-tooltip=""], .noUiSlider, .noUiSlider-single)::after {
+		-webkit-transition: none !important;
+		transition: none !important;
+	}
+}
