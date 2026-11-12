@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>y-tooltip demo – CSS-only tooltips</title>
+	<meta name="description" content="Demo of y-tooltip, a free CSS-only tooltip library with no JavaScript. Four positions, CSS variables, keyboard and touch support.">
+	<link rel="canonical" href="https://y-tools.dooble.us/ytooltip/">
+	<link rel="stylesheet" href="ytooltip.css">
+	<style type="text/css">
+	body {
+		background: #eceffb;
+		margin: 0;
+		padding: 40px 20px;
+		color: #141833;
+		font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+	}
+	.demo-wrap {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+	.demo-title {
+		margin: 0 0 8px 0;
+		color: #517fe5;
+		font-size: 2.6rem;
+		text-align: center;
+	}
+	.demo-intro {
+		margin: 0 0 32px 0;
+		color: #565c7d;
+		font-size: 1.1rem;
+		line-height: 1.6;
+		text-align: center;
+	}
+	.demo-intro a,
+	.demo-footer a {
+		color: #3560cf;
+	}
+	.demo-card {
+		background: #fff;
+		margin: 0 0 24px 0;
+		padding: 24px;
+		border: 1.5px solid #b9c0e6;
+		border-radius: 16px;
+	}
+	.demo-card h2 {
+		margin: 0 0 16px 0;
+		padding: 0 0 10px 0;
+		border-bottom: 2px solid #d5daf0;
+		font-size: 1.3rem;
+	}
+	.demo-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 24px 36px;
+		padding: 72px 12px;
+		background: #f6f7fd;
+		border-radius: 12px;
+	}
+	.demo-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 44px;
+		padding: 8px 20px;
+		background: #fff;
+		border: 1.5px solid #b9c0e6;
+		border-radius: 10px;
+		color: #141833;
+		font-family: inherit;
+		font-size: 0.95rem;
+		font-weight: 500;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	.demo-btn:focus-visible {
+		outline: 3px solid #517fe5;
+		outline-offset: 3px;
+	}
+	.demo-theme {
+		--y-tooltip-bg: #517fe5;
+		--y-tooltip-radius: 6px;
+		--y-tooltip-font-size: 14px;
+	}
+	.demo-dark {
+		--y-tooltip-bg: #141833;
+		--y-tooltip-color: #12d6e0;
+		--y-tooltip-max-width: 240px;
+	}
+	.demo-footer {
+		color: #565c7d;
+		text-align: center;
+	}
+	</style>
+</head>
+<body>
+
+<main class="demo-wrap">
+	<h1 class="demo-title">y-tooltip</h1>
+	<div class="demo-intro">Pure CSS tooltips. Add <code>data-tooltip</code> to any element.<br>Docs and live page: <a href="https://y-tools.dooble.us/ytooltip/">y-tools.dooble.us/ytooltip</a></div>
+
+	<section class="demo-card">
+		<h2>Positions</h2>
+		<div class="demo-row">
+			<button type="button" class="demo-btn" data-tooltip="Tooltip below">Bottom</button>
+			<button type="button" class="demo-btn" data-tooltip="Tooltip above" data-tooltip-top>Top</button>
+			<button type="button" class="demo-btn" data-tooltip="Aligned to the left edge" data-tooltip-left>Left</button>
+			<button type="button" class="demo-btn" data-tooltip="Aligned to the right edge" data-tooltip-right>Right</button>
+			<button type="button" class="demo-btn" data-tooltip="Above, aligned left" data-tooltip-top data-tooltip-left>Top left</button>
+			<button type="button" class="demo-btn" data-tooltip="Above, aligned right" data-tooltip-top data-tooltip-right>Top right</button>
+		</div>
+	</section>
+
+	<section class="demo-card">
+		<h2>Links, icons and long text</h2>
+		<div class="demo-row">
+			<a href="https://y-tools.dooble.us/ytooltip/" class="demo-btn" data-tooltip="Open the live page">Link</a>
+			<button type="button" class="demo-btn" aria-label="Settings" data-tooltip="Settings" data-tooltip-top>
+				<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>
+			</button>
+			<button type="button" class="demo-btn" data-tooltip="Long text wraps automatically when it is wider than 176 pixels, so the tooltip never grows too wide.">Long text</button>
+		</div>
+	</section>
+
+	<section class="demo-card">
+		<h2>CSS variables</h2>
+		<div class="demo-row">
+			<button type="button" class="demo-btn" data-tooltip="Custom color and radius" style="--y-tooltip-bg: #517fe5; --y-tooltip-radius: 6px;">One tooltip</button>
+			<div class="demo-theme">
+				<button type="button" class="demo-btn" data-tooltip="Set on a wrapper">Wrapper theme</button>
+			</div>
+			<div class="demo-dark">
+				<button type="button" class="demo-btn" data-tooltip="Dark tooltip with a wider limit and a teal text color" data-tooltip-top>Dark theme</button>
+			</div>
+		</div>
+	</section>
+
+	<div class="demo-footer">Tooltips show on hover, on keyboard focus (press Tab) and on tap.</div>
+</main>
+
+</body>
+</html>
