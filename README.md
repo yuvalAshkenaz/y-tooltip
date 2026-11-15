@@ -1,4 +1,4 @@
-# y-tooltip 1.4
+# y-tooltip 1.5
 
 **y-tooltip** is a tiny tooltip library written in **pure CSS**. No JavaScript, no dependencies, one attribute.  
 Add `data-tooltip` to any element and it shows a tooltip on hover, on keyboard focus and on tap.
@@ -21,10 +21,10 @@ Add `data-tooltip` to any element and it shows a tooltip on hover, on keyboard f
 
 ## 📦 Installation
 
-Download [`ytooltip.min.css`](https://y-tools.dooble.us/wp-content/themes/ytools/tools/ytooltip/ytooltip.min.css) (or the readable [`ytooltip.css`](https://y-tools.dooble.us/wp-content/themes/ytools/tools/ytooltip/ytooltip.css)) and include it in your HTML:
+Download [`ytooltip.min.css`](https://y-tools.dooble.us/wp-content/themes/ytools/tools/ytooltip/dist/css/ytooltip.min.css) (or the readable [`ytooltip.css`](https://y-tools.dooble.us/wp-content/themes/ytools/tools/ytooltip/dist/css/ytooltip.css)) and include it in your HTML:
 
 ```html
-<link rel="stylesheet" href="ytooltip.min.css" />
+<link rel="stylesheet" href="dist/css/ytooltip.min.css" />
 ```
 
 ---
@@ -73,6 +73,18 @@ Set the variables on one element to style a single tooltip, or on a wrapper, `:r
 | `--y-tooltip-padding` | `4px 12px` | Space inside the tooltip. |
 | `--y-tooltip-max-width` | `176px` | The widest the tooltip can be before the text wraps. |
 | `--y-tooltip-z-index` | `2` | Stacking order. |
+
+---
+
+## 📐 Edge alignment script (optional)
+
+Browsers with a mouse and CSS anchor positioning keep tooltips on the screen with CSS alone. On touch screens use the optional `ytooltip.js`:
+
+```html
+<script src="dist/js/ytooltip.min.js"></script>
+```
+
+Just before a tooltip appears (hover, focus or tap) the script checks whether it would leave the screen. If it would, it sets `data-tooltip-left` or `data-tooltip-right` on that element, so a button near an edge works with no extra markup, in any layout and on any number of rows. An alignment you set yourself is kept as long as it fits on the screen, and is switched only when it would be cut off. You can also call `YTooltip.align(element)`.
 
 ---
 
